@@ -1,21 +1,22 @@
 import io
-import sys
-import codecs
-from collections import defaultdict
-
-from user import User
-import glob
-import re
-import cPickle as pickle
 import os
-from twitter_dm.utility.general_utils import read_grouped_by_newline_file
-from collections import defaultdict
-from textunit import TextUnit
-
-from constraints import get_id_and_value_map,IDENTITY_PREFIX, SENTWORD_PREFIX
-
-
+import re
+import sys
+import glob
 import msgpack
+from constraints import IDENTITY_PREFIX, SENTWORD_PREFIX
+from textunit import TextUnit
+from twitter_dm.utility.general_utils import read_grouped_by_newline_file
+import logging
+from pyspark import SparkContext, SparkConf
+
+
+if len(sys.argv) != 3:
+    print 'Usage: [input_directory] [output_directory]'
+    sys.exit(-1)
+
+OUTPUT_DIRECTORY = sys.argv[2]
+
 def get_textunits(filename):
     out_fn = os.path.join(os.path.basename(filename))
     print out_fn+".mpack"
@@ -66,6 +67,16 @@ def get_textunits(filename):
 
     return 'done'
 
+# set up spark
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s',
+                    level=logging.INFO)
+
+conf = (SparkConf()
+     .setMaster("local[*]")
+     .setAppName("My app")
+     .set("spark.driver.maxResultSize", "40g"))
+sc = SparkContext(conf=conf)
+
 # read in sentiment word values
 sent_to_id = {}
 sent_values = {}
@@ -90,4 +101,10 @@ emoji_data = {x.split("\t")[0] : float(x.strip().split("\t")[1])
                     for x in io.open("../data/sentiment_data/emoji_sent_data.tsv")}
 emoji_regex = re.compile("|".join(emoji_data.keys()))
 
-get_textunits(sys.argv[1])
+files = glob.glob(sys.argv[1])
+
+print 'Input dir: ', sys.argv[1], ' n files: ', len(files)
+print 'Output dir: ', OUTPUT_DIRECTORY
+
+sentence_data = sc.parallelize(files, len(files)).map(get_textunits).collect()
+sc.stop()
