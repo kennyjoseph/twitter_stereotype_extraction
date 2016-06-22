@@ -1,5 +1,4 @@
 from collections import defaultdict
-from textunit import ADD_UV_REGEX
 import msgpack
 import random
 import os
@@ -14,7 +13,8 @@ class SimpleTweet:
         self.full_deflection_string = x[6].replace("^","**")
 
 
-def get_users_from_tweet_list(all_tweets,min_tweets_per_user, percent_test, fil="", is_simple_tweet=False):
+def get_users_from_tweet_list(all_tweets,min_tweets_per_user, percent_test, fil="",
+                              is_simple_tweet=False, do_random_shuffle=False):
     user_to_tweets = defaultdict(list)
     if is_simple_tweet:
         [user_to_tweets[t.uid].append(t) for t in all_tweets]
@@ -28,6 +28,8 @@ def get_users_from_tweet_list(all_tweets,min_tweets_per_user, percent_test, fil=
         u = User(uid, fil)
         n_u_tweets = len(tweets)
         n_test_tweets = int(percent_test * n_u_tweets)
+        if do_random_shuffle:
+            random.shuffle(tweets)
 
         for tweet in tweets[:(n_u_tweets-n_test_tweets+1)]:
             u.add_training_tweet(tweet, is_simple_tweet)

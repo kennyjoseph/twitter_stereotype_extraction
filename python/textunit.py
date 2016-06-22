@@ -841,13 +841,14 @@ class TextUnit:
 
 class FakeTextUnit(TextUnit):
     def __init__(self):
-        self.constraint_map = {}
         self.identities = set()
+        self.identities_to_constraint_string_map = {}
+        self.full_deflection_string = ""
+        self.unit_id = "blah\tcat"
+        self.raw_text = "raw"
 
-    def add_fake_constraint(self, identity_id, value):
-        self.constraint_map[identity_id] = value
-        self.identities.add(identity_id)
+    def add_fake_constraint(self, identity_id, mean, sd_val):
+        self.identities.add(identity_id+"e")
+        c0,c1 = sd_val, -2 * sd_val * np.random.normal(mean, sd_val)
+        self.identities_to_constraint_string_map[str(identity_id)+"e"] = [c0,c1]
 
-    def compute_constants_for_identity(self, id_to_compute_for, identity_values, sentiment_word_values):
-        sd_val = np.random.uniform(0, 1)
-        return sd_val, -2 * sd_val * np.random.normal(self.constraint_map[id_to_compute_for], sd_val)
