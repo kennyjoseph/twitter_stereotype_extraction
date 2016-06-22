@@ -18,9 +18,9 @@ if len(sys.argv) != 3:
 OUTPUT_DIRECTORY = sys.argv[2]
 
 def get_textunits(filename):
-    out_fn = os.path.join(os.path.basename(filename))
-    print out_fn+".mpack"
-    if os.path.exists(out_fn+".mpack"):
+    out_fn = os.path.join(OUTPUT_DIRECTORY,os.path.basename(filename)+".mpack")
+    print out_fn
+    if os.path.exists(out_fn):
         return 'done'
 
     ##### GET THE DATA
@@ -63,7 +63,7 @@ def get_textunits(filename):
              x.constraint_string_list,
              x.full_deflection_string]
            for x in to_write]
-    msgpack.dump(dat, open(out_fn+".mpack","wb"))
+    msgpack.dump(dat, open(out_fn,"wb"))
 
     return 'done'
 
@@ -101,7 +101,7 @@ emoji_data = {x.split("\t")[0] : float(x.strip().split("\t")[1])
                     for x in io.open("../data/sentiment_data/emoji_sent_data.tsv")}
 emoji_regex = re.compile("|".join(emoji_data.keys()))
 
-files = glob.glob(sys.argv[1])
+files = glob.glob(sys.argv[1]+"/*")
 
 print 'Input dir: ', sys.argv[1], ' n files: ', len(files)
 print 'Output dir: ', OUTPUT_DIRECTORY
