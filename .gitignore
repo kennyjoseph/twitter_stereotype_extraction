@@ -5,3 +5,4 @@
 python/.ipynb_checkpoints/
 python/testing/.ipynb_checkpoints/
 output/
+python/*.pyc

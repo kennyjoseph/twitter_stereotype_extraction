@@ -38,12 +38,12 @@ def get_users_from_tweet_list(all_tweets,min_tweets_per_user, percent_test, fil=
         users.append(u)
     return users
 
-def get_users_from_mpack_fil(fil,min_tweets_per_user, percent_test):
+def get_users_from_mpack_fil(fil,min_tweets_per_user, percent_test,do_random_shuffle):
     all_tweets = [SimpleTweet(t,fil) for t in msgpack.load(open(fil,"rb"))]
     return get_users_from_tweet_list(all_tweets,
                                      min_tweets_per_user,
                                      percent_test,
-                                     fil,True)
+                                     fil,True, do_random_shuffle)
 
 def load_users(directory):
     print 'loading user data...'
