@@ -31,7 +31,7 @@ class AssociationModel:
 
         self.precision_matrix = np.linalg.inv(self.sigma)
         self.eta = np.zeros((self.n_users, self.n_identities))
-        self.iteration = -1
+        self.iteration = 0
         self.train_ll = 0
         self.test_ll = 0
         self.train_sum = np.array([u.training_vector.sum() for u in users]).sum()

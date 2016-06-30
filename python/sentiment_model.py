@@ -50,7 +50,7 @@ class SentimentModel:
         self.phi = np.random.multivariate_normal(self.mu, self.sigma, self.n_users)
         print 'got phi'
 
-        self.iteration = -1
+        self.iteration = 0
         self.train_perplexity = 0
         self.test_perplexity = 0
 
