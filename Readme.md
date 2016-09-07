@@ -16,7 +16,7 @@ If you use the code, please let me know so I can help with any issues! And if yo
 
 # Data 
 
-Due to Twitter's TOS, I can't release the raw JSON of the tweets. Instead what I can release is a processed version of it, which is more useful for the present work anyway. The data is located [here]() in a modified Co-NLL format explained below. With the data in this format you'll just be able to run the models and/or experiment with creating new models with this dependency-parsed version of the data. If you want to re-collect the original data, however, the tweet IDs are included, so you're more than welcome to do that!
+Due to Twitter's TOS, I can't release the raw JSON of the tweets. Instead what I can release is a processed version of it, which is more useful for the present work anyway. The data is located [here](https://dl.dropboxusercontent.com/u/53207718/twitter_stereotype/twitter_stereotype_extraction_data.tgz) in a modified Co-NLL format explained below. With the data in this format you'll just be able to run the models and/or experiment with creating new models with this dependency-parsed version of the data. If you want to re-collect the original data, however, the tweet IDs are included, so you're more than welcome to do that!
 
 ## Data Collection Strategy
 
