@@ -29,7 +29,7 @@ from constraints import IDENTITY_PREFIX, SENTWORD_PREFIX
 sent_to_id = {}
 sent_values = {}
 
-for i,x in enumerate(io.open("sentiment_data/clean_epa_terms.txt")):
+for i,x in enumerate(io.open("../data/sentiment_data/clean_epa_terms.txt")):
     x_spl = x.split("\t")
     word = x_spl[0]
 
